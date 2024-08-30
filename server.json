@@ -1,0 +1,60 @@
+{
+  "transactions": [
+    {
+      "id": 1,
+      "description": "Desenvolvimento de site",
+      "type": "income",
+      "category": "Venda",
+      "price": 12000,
+      "createdAt": "2024-08-27T13:22:50.538Z"
+    },
+    {
+      "id": 2,
+      "description": "Hamburguer",
+      "type": "outcome",
+      "category": "Alimentação",
+      "price": 30,
+      "createdAt": "2024-08-27T10:22:50.538Z"
+    },
+    {
+      "id": 3,
+      "description": "Conserto Carro",
+      "type": "outcome",
+      "category": "Carro",
+      "price": 700,
+      "createdAt": "2024-08-25T10:22:50.538Z"
+    },
+    {
+      "description": "Desenvolvimento de app",
+      "category": "Freela",
+      "price": 5000,
+      "type": "income",
+      "createdAt": "2024-08-28T16:43:40.737Z",
+      "id": 4
+    },
+    {
+      "description": "Bateria carro",
+      "category": "Carro",
+      "price": 500,
+      "type": "outcome",
+      "createdAt": "2024-08-28T16:45:26.567Z",
+      "id": 5
+    },
+    {
+      "description": "Cachorro quente",
+      "category": "Alimentação",
+      "price": 25,
+      "type": "outcome",
+      "createdAt": "2024-08-28T16:52:46.268Z",
+      "id": 6
+    },
+    {
+      "description": "Cafe da tarde",
+      "category": "Alimentação",
+      "price": 17,
+      "type": "outcome",
+      "createdAt": "2024-08-28T17:16:00.672Z",
+      "id": 7
+    }
+  ]
+}
