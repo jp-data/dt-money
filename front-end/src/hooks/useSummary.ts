@@ -15,33 +15,14 @@ export function useSummary() {
                 acc.total += transaction.price
             } else {
                 acc.outcome += transaction.price;
-                acc.total -= transaction.price 
+                acc.total -= transaction.price
             }
-            
+
             return acc
         },
         // segundo parametro
-        { income: 0, outcome: 0, total: 0} 
+        { income: 0, outcome: 0, total: 0 }
     )
 
     return summary
 }
-
-// const numeros = [1, 3, 5, 10]
-// const total = numeros.reduce((acc, element) => {
-//     return acc + element
-// })
-
-// console.log(total)
-
-// const itens = [
-//     {description: 'pen', quantity: 2, price: 3},
-//     {description: 'rule', quantity: 2, price: 5},
-//     {description: 'erase', quantity: 3, price: 6},
-// ]
-
-// const total = itens.reduce((soma, itemAtual) => {
-//     return soma + (itemAtual.price * itemAtual.quantity)
-// }, 0)
-
-// console.log(total)
