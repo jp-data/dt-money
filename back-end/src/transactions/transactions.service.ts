@@ -19,7 +19,8 @@ export class TransactionsService {
 
   async getTransactions() {
     const transactions = await this.transactionsRepository.query(
-      `SELECT * FROM transactions`,
+      `SELECT * FROM transactions
+        ORDER BY "createdAt" ASC`,
     );
     return transactions;
   }

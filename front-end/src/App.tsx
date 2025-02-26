@@ -1,8 +1,9 @@
 import { ThemeProvider } from "styled-components";
 import { defaultTheme } from "./styles/themes/default";
 import { GlobalStyle } from "./styles/global";
-import { Transactions } from "./pages/Transactions";
 import { TransactionsProvider } from "./contexts/TransactionsContext";
+import { RouterProvider } from "react-router-dom";
+import { router } from "./routes";
 
 export function App() {
 
@@ -10,7 +11,7 @@ export function App() {
     <ThemeProvider theme={defaultTheme}>
       <GlobalStyle />
       <TransactionsProvider>
-        <Transactions />
+        <RouterProvider router={router} />
       </TransactionsProvider>
     </ThemeProvider>
   )
