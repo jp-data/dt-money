@@ -46,14 +46,17 @@ export class TransactionsController {
 
   @Get('/filter')
   async listFilteredTransactions(
+    @Req() req: RequestWithUser,
     @Query('category') category?: string,
     @Query('type') type?: string,
     @Query('monthYear') monthYear?: string,
   ) {
+    const userId = req.user.sub;
     return await this.transactionService.getFilteredTransactions(
       category,
       type,
       monthYear,
+      userId,
     );
   }
 }

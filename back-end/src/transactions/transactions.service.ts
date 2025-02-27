@@ -46,9 +46,10 @@ export class TransactionsService {
     category: string,
     type: string,
     monthYear: string,
+    userId: string,
   ) {
     let query = `
-        SELECT * FROM transactions WHERE 1=1`;
+        SELECT * FROM transactions WHERE "userId" = '${userId}'`;
     const queryParams: any[] = [];
 
     if (category) {
