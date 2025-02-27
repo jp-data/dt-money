@@ -9,7 +9,7 @@ export class TransactionsService {
   constructor(
     @InjectRepository(TransactionsEntity)
     private readonly transactionsRepository: Repository<TransactionsEntity>,
-  ) { }
+  ) {}
 
   async create(createTransactionDto: CreateTransactionDto) {
     const newTransaction =
