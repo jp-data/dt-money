@@ -12,4 +12,4 @@ import { AuthGuard } from './guard/guard';
   controllers: [UsersController],
   exports: [UserService],
 })
-export class UsersModule { }
+export class UsersModule {}

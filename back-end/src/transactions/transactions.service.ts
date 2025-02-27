@@ -3,13 +3,14 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TransactionsEntity } from './entities/transactions.entity';
 import { Repository } from 'typeorm';
+import { TransactionsListDto } from './dtos/transactions-list';
 
 @Injectable()
 export class TransactionsService {
   constructor(
     @InjectRepository(TransactionsEntity)
     private readonly transactionsRepository: Repository<TransactionsEntity>,
-  ) {}
+  ) { }
 
   async create(createTransactionDto: CreateTransactionDto) {
     const newTransaction =
@@ -17,11 +18,27 @@ export class TransactionsService {
     return this.transactionsRepository.save(newTransaction);
   }
 
-  async getTransactions() {
-    const transactions = await this.transactionsRepository.query(
-      `SELECT * FROM transactions
-        ORDER BY "createdAt" ASC`,
+  async getTransactions(userId: string) {
+    const transactionsForList = await this.transactionsRepository.find({
+      where: {
+        user: { id: userId },
+      },
+      relations: {
+        user: true,
+      },
+    });
+
+    const transactions = transactionsForList.map(
+      (transactions) =>
+        new TransactionsListDto(
+          transactions.id,
+          transactions.description,
+          transactions.price,
+          transactions.category,
+          transactions.type,
+        ),
     );
+
     return transactions;
   }
 

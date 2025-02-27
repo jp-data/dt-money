@@ -16,6 +16,7 @@ const config: DataSourceOptions = {
   synchronize: true,
   entities: [path.join(__dirname, '../**/*.entity.{ts,js}')],
   logging: environment === 'development',
+  migrations: [path.join(__dirname, '../../dist/database/migrations/*.js')],
 };
 
 export const AppDataSource = new DataSource(config);

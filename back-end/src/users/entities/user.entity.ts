@@ -2,9 +2,11 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Exclude } from 'class-transformer';
+import { TransactionsEntity } from '../../transactions/entities/transactions.entity';
 
 @Entity({ name: 'users' })
 export class UserEntity {
@@ -38,4 +40,10 @@ export class UserEntity {
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: string;
+
+  @OneToMany(
+    () => TransactionsEntity,
+    (transactionsEntity) => transactionsEntity.user,
+  )
+  transactions: TransactionsEntity[];
 }

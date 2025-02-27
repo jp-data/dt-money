@@ -5,7 +5,7 @@ import { CreateAuthDto } from './dtos/create-auth-dto';
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly userService: UserService) { }
+  constructor(private readonly userService: UserService) {}
 
   @Post()
   async createUser(@Body(ValidationPipe) createUserDto: CreateUserDto) {

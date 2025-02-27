@@ -16,4 +16,4 @@ import { ConfigService, ConfigModule } from '@nestjs/config';
   ],
   exports: [JwtModule, ConfigModule],
 })
-export class SharedModule { }
+export class SharedModule {}

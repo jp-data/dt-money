@@ -1,7 +1,10 @@
+import { UserEntity } from '../../users/entities/user.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -43,4 +46,11 @@ export class TransactionsEntity {
     type: 'varchar',
   })
   type: string;
+
+  @Column({ type: 'uuid', nullable: false })
+  userId: string;
+
+  @ManyToOne(() => UserEntity, (userEntity) => userEntity.transactions)
+  @JoinColumn({ name: 'userId' })
+  user: UserEntity;
 }
