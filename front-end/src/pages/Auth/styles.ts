@@ -59,6 +59,23 @@ export const FormContainer = styled.div`
         }
     }
 
+    @media (max-width: 480px) {
+        width: 100%;
+        padding: 0 1rem;
+
+        form {
+            width: 100%;
+        }
+
+        button {
+            width: 100%;
+        }
+        
+        h1, h2, button {
+            font-size: 18px;
+        }
+    }
+
     @media (max-width: 768px){
         width: 80%;
         padding: 0 1rem;
@@ -73,12 +90,17 @@ export const FormContainer = styled.div`
         }
     }
 
-    @media (max-width: 480px) {
-        width: 90%;
+
+    @media (min-width: 769px) and (max-width: 1468px) {
+        width: 60%;
         padding: 0 1rem;
 
+        form {
+            width: 80%;
+        }
+
         button {
-            width: 100%;
+            width: 80%;
         }
     }
 `
