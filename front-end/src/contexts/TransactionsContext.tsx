@@ -22,10 +22,17 @@ interface TransactionContextType {
   transactions: Transaction[];
   fetchTransactions: (query?: string) => Promise<void>;
   createTransaction: (data: CreateTransactionInput) => Promise<void>;
+  createUser: (data: CreateUserInput) => Promise<void>;
 }
 
 interface TransactionsProviderProps {
   children: ReactNode
+}
+
+interface CreateUserInput {
+  name: string
+  email: string
+  password: string
 }
 
 export const TransactionsContext = createContext({} as TransactionContextType);
@@ -62,11 +69,22 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
     fetchTransactions()
   }, []);
 
+  const createUser = useCallback(async (data: CreateUserInput) => {
+    const { name, email, password } = data
+
+    await api.post('/users', {
+      name,
+      email,
+      password
+    })
+  }, [])
+
   return (
     <TransactionsContext.Provider value={{
       transactions,
       fetchTransactions,
-      createTransaction
+      createTransaction,
+      createUser
     }}>
       {children}
     </TransactionsContext.Provider>

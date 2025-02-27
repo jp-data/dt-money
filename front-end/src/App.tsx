@@ -4,12 +4,14 @@ import { GlobalStyle } from "./styles/global";
 import { TransactionsProvider } from "./contexts/TransactionsContext";
 import { RouterProvider } from "react-router-dom";
 import { router } from "./routes";
+import { Toaster } from "sonner";
 
 export function App() {
 
   return (
     <ThemeProvider theme={defaultTheme}>
       <GlobalStyle />
+      <Toaster richColors />
       <TransactionsProvider>
         <RouterProvider router={router} />
       </TransactionsProvider>
