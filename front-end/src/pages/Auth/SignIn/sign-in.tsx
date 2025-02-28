@@ -6,6 +6,8 @@ import axios from "axios";
 
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../contexts/AuthContext';
+import { TransactionsContext } from '../../../contexts/TransactionsContext';
+import { useContextSelector } from 'use-context-selector';
 
 const signInFormSchema = z.object({
     email: z.string().email(),
@@ -23,6 +25,8 @@ export function SignIn() {
         resolver: zodResolver(signInFormSchema)
     })
 
+    const fetchTransactions = useContextSelector(TransactionsContext, context => context.fetchTransactions)
+
 
     async function handleLogin(data: SignInForm) {
         const { email, password } = data;
@@ -35,6 +39,7 @@ export function SignIn() {
                 password
             })
             login(response.access_token)
+            await fetchTransactions()
             navigate('/transactions')
 
         } catch (error) {
