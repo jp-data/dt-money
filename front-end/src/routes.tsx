@@ -4,6 +4,8 @@ import { Auth } from "./pages/Auth";
 import { PrivateRoute } from "./contexts/PrivateRoute";
 import { SignIn } from "./pages/Auth/SignIn/sign-in";
 import { SignUp } from "./pages/Auth/SignUp/sign-up";
+import { Summary } from "./Components/Summary";
+import { SearchForm } from "./pages/Transactions/components/SearchForm";
 
 export const router = createBrowserRouter([
     {
@@ -11,7 +13,12 @@ export const router = createBrowserRouter([
         element:
             <PrivateRoute>
                 <Transactions />
-            </PrivateRoute>
+            </PrivateRoute>,
+        children: [
+            { element: <Summary /> },
+            { element: <SearchForm /> }
+        ]
+
     },
     {
         path: '/auth',

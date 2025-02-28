@@ -3,10 +3,9 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import axios from "axios";
-import { TransactionsContext } from '../../../contexts/TransactionsContext';
-import { useContextSelector } from 'use-context-selector';
-import { useAuth } from '../../../contexts/AuthContext';
+
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../../contexts/AuthContext';
 
 const signInFormSchema = z.object({
     email: z.string().email(),
@@ -18,15 +17,12 @@ type SignInForm = z.infer<typeof signInFormSchema>
 
 export function SignIn() {
     const navigate = useNavigate()
-    const createLogin = useContextSelector(TransactionsContext, (context) => {
-        return context.authenticatedUser
-    })
+    const { authenticatedUser: createLogin, login } = useAuth()
 
     const { register: registerSignIn, handleSubmit: handleSubmitSignIn } = useForm<SignInForm>({
         resolver: zodResolver(signInFormSchema)
     })
 
-    const { login } = useAuth()
 
     async function handleLogin(data: SignInForm) {
         const { email, password } = data;

@@ -14,7 +14,6 @@ export function Auth() {
             </FormContainer>
         </div>
     )
-
 }
 
 

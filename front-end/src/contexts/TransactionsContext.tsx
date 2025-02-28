@@ -22,23 +22,10 @@ interface TransactionContextType {
   transactions: Transaction[];
   fetchTransactions: (query?: string) => Promise<void>;
   createTransaction: (data: CreateTransactionInput) => Promise<void>;
-  createUser: (data: CreateUserInput) => Promise<void>;
-  authenticatedUser: (data: CreateLogin) => Promise<{ access_token: string }>;
 }
 
 interface TransactionsProviderProps {
   children: ReactNode
-}
-
-interface CreateUserInput {
-  name: string
-  email: string
-  password: string
-}
-
-interface CreateLogin {
-  email: string
-  password: string
 }
 
 export const TransactionsContext = createContext({} as TransactionContextType);
@@ -90,37 +77,18 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
   )
 
   useEffect(() => {
-    fetchTransactions()
-  }, []);
-
-  const createUser = useCallback(async (data: CreateUserInput) => {
-    const { name, email, password } = data
-
-    const response = await api.post('/users', {
-      name,
-      email,
-      password
-    })
-    return response.data
+    const token = localStorage.getItem('token')
+    if (token) {
+      fetchTransactions()
+    }
   }, [])
 
-  const authenticatedUser = useCallback(async (data: CreateLogin) => {
-    const { email, password } = data
-
-    const response = await api.post('/users/login', {
-      email,
-      password
-    })
-    return response.data
-  }, [])
 
   return (
     <TransactionsContext.Provider value={{
       transactions,
       fetchTransactions,
       createTransaction,
-      createUser,
-      authenticatedUser
     }}>
       {children}
     </TransactionsContext.Provider>

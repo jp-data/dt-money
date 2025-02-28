@@ -3,8 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import axios from "axios";
 import * as z from 'zod';
-import { useContextSelector } from "use-context-selector";
-import { TransactionsContext } from "../../../contexts/TransactionsContext";
+import { useAuth } from "../../../contexts/AuthContext";
 
 const signUpFormSchema = z.object({
     name: z.string(),
@@ -15,9 +14,7 @@ const signUpFormSchema = z.object({
 type SignUpForm = z.infer<typeof signUpFormSchema>
 
 export function SignUp() {
-    const createUser = useContextSelector(TransactionsContext, (context) => {
-        return context.createUser
-    })
+    const { createUser } = useAuth()
 
     const { register: registerSignUp, handleSubmit: handleSubmitSignUp, reset } = useForm<SignUpForm>({
         resolver: zodResolver(signUpFormSchema)

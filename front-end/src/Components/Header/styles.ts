@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 
-export const HeaderContainer = styled.header `
+export const HeaderContainer = styled.header`
     background: ${props => props.theme['gray-900']};
     padding: 2.5rem 0 7.5rem 0;
 `
@@ -28,5 +28,22 @@ export const NewTransactionButton = styled.button`
     &:hover {
         background: ${props => props.theme['green-700']};
         transition: background-color 0.2s;
+    }
+`
+
+export const ButtonsContainer = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+
+    span {
+        text-decoration: underline;
+        cursor: pointer;
+        color: ${(props) => props.theme.white};
+
+        &:hover {
+            color: ${(props) => props.theme['green-500']};
+            transition: color 0.2s
+        }
     }
 `
