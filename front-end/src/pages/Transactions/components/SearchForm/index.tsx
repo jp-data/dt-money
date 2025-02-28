@@ -7,7 +7,6 @@ import { TransactionsContext } from '../../../../contexts/TransactionsContext';
 import { useContextSelector } from 'use-context-selector';
 import { memo } from 'react';
 
-
 const searchFormSchema = z.object({
     query: z.string(),
 });
@@ -33,7 +32,7 @@ function SearchFormComponent() {
     return (
         <SearchFormContainer onSubmit={handleSubmit(handleSearchTransactions)}>
             <input type="text" placeholder="Busque por transações" {...register('query')} />
-            
+
             <button type="submit" disabled={isSubmitting}>
                 <MagnifyingGlass size={20} />
                 Buscar

@@ -30,10 +30,6 @@ export function Summary() {
                 </header>
                 <strong>{priceFormatter.format(summary.total)}</strong>
             </SummaryCard>
-
         </SummaryContainer>
-
-
-
     )
 }

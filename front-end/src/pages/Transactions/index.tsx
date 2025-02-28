@@ -17,7 +17,6 @@ export function Transactions() {
         <div>
             <Header />
             <Summary />
-
             <TransactionsContainer>
                 <SearchForm />
                 <TransactionsTable>
@@ -28,7 +27,7 @@ export function Transactions() {
                                     <td width='50%'>{transaction.description}</td>
                                     <td>
                                         <PriceHighlight variant={transaction.type}>
-                                            {transaction.type === 'outcome' && '- ' }
+                                            {transaction.type === 'outcome' && '- '}
                                             {priceFormatter.format(transaction.price)}
                                         </PriceHighlight>
                                     </td>
@@ -40,7 +39,6 @@ export function Transactions() {
                     </tbody>
                 </TransactionsTable>
             </TransactionsContainer>
-
         </div >
     )
 }

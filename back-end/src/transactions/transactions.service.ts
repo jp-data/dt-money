@@ -36,6 +36,7 @@ export class TransactionsService {
           transactions.price,
           transactions.category,
           transactions.type,
+          transactions.createdAt,
         ),
     );
 

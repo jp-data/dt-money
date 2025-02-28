@@ -5,5 +5,6 @@ export class TransactionsListDto {
         readonly price: number,
         readonly category: string,
         readonly type: string,
+        readonly createdAt: Date,
     ) { }
 }

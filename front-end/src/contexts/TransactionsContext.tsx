@@ -23,6 +23,7 @@ interface TransactionContextType {
   fetchTransactions: (query?: string) => Promise<void>;
   createTransaction: (data: CreateTransactionInput) => Promise<void>;
   createUser: (data: CreateUserInput) => Promise<void>;
+  authenticatedUser: (data: CreateLogin) => Promise<{ access_token: string }>;
 }
 
 interface TransactionsProviderProps {
@@ -35,6 +36,11 @@ interface CreateUserInput {
   password: string
 }
 
+interface CreateLogin {
+  email: string
+  password: string
+}
+
 export const TransactionsContext = createContext({} as TransactionContextType);
 
 export function TransactionsProvider({ children }: TransactionsProviderProps) {
@@ -42,7 +48,16 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
 
   const fetchTransactions = useCallback(
     async () => {
-      const response = await api.get('/transactions')
+      const token = localStorage.getItem('token')
+      if (!token) {
+        throw new Error('Usuário não autenticado.')
+      }
+
+      const response = await api.get('/transactions', {
+        headers: {
+          authorization: `Bearer ${token}`
+        }
+      })
 
       setTransactions(response.data)
     },
@@ -50,6 +65,11 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
   )
 
   const createTransaction = useCallback(async (data: CreateTransactionInput) => {
+    const token = localStorage.getItem('token')
+    if (!token) {
+      throw new Error('Uusário não autenticado.')
+    }
+
     const { category, description, price, type } = data;
 
     const response = await api.post('/transactions', {
@@ -58,9 +78,13 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
       price,
       type,
       createdAt: new Date(),
-    })
-    setTransactions(state => [response.data, ...state])
+    },
+      {
+        headers: { Authorization: `Bearer ${token}` }
+      }
+    )
 
+    setTransactions(state => [response.data, ...state])
   },
     []
   )
@@ -72,11 +96,22 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
   const createUser = useCallback(async (data: CreateUserInput) => {
     const { name, email, password } = data
 
-    await api.post('/users', {
+    const response = await api.post('/users', {
       name,
       email,
       password
     })
+    return response.data
+  }, [])
+
+  const authenticatedUser = useCallback(async (data: CreateLogin) => {
+    const { email, password } = data
+
+    const response = await api.post('/users/login', {
+      email,
+      password
+    })
+    return response.data
   }, [])
 
   return (
@@ -84,7 +119,8 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
       transactions,
       fetchTransactions,
       createTransaction,
-      createUser
+      createUser,
+      authenticatedUser
     }}>
       {children}
     </TransactionsContext.Provider>

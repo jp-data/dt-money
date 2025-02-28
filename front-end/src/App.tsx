@@ -5,16 +5,19 @@ import { TransactionsProvider } from "./contexts/TransactionsContext";
 import { RouterProvider } from "react-router-dom";
 import { router } from "./routes";
 import { Toaster } from "sonner";
+import { AuthProvider } from "./contexts/AuthContext";
 
 export function App() {
 
   return (
     <ThemeProvider theme={defaultTheme}>
       <GlobalStyle />
-      <Toaster richColors />
-      <TransactionsProvider>
-        <RouterProvider router={router} />
-      </TransactionsProvider>
+      <AuthProvider>
+        <Toaster richColors />
+        <TransactionsProvider>
+          <RouterProvider router={router} />
+        </TransactionsProvider>
+      </AuthProvider>
     </ThemeProvider>
   )
 }
