@@ -14,7 +14,7 @@ export const router = createBrowserRouter([
             </PrivateRoute>
     },
     {
-        path: '/login',
+        path: '/auth',
         element: <Auth />,
         children: [
             { element: <SignIn /> },

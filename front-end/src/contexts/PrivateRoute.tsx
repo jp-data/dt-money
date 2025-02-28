@@ -10,7 +10,7 @@ export const PrivateRoute = ({ children }: PrivateRouteProps) => {
     const { isAuthenticated } = useAuth()
 
     if (!isAuthenticated) {
-        return <Navigate to='/login' />
+        return <Navigate to='/auth' />
     }
 
     return children
