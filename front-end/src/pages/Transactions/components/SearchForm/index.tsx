@@ -1,43 +1,36 @@
 import { MagnifyingGlass } from 'phosphor-react';
-import { useForm } from 'react-hook-form';
 import { SearchFormContainer } from './styles';
-import * as z from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { TransactionsContext } from '../../../../contexts/TransactionsContext';
-import { useContextSelector } from 'use-context-selector';
 import { memo } from 'react';
+import * as Dialog from '@radix-ui/react-dialog'
+import { SearchTransactionsModal } from './components/SearchTransactionsModal';
 
-const searchFormSchema = z.object({
-    query: z.string(),
-});
-type SearchFormInputs = z.infer<typeof searchFormSchema>;
 
-function SearchFormComponent() {
-    const fetchTransactions = useContextSelector(TransactionsContext, (context) => {
-        return context.fetchTransactions
-    });
+interface SearchProductsProps {
+    onSearch: (value: string) => void
+    onApplyFilters: (filters: { monthYear: string; type: string; category: string }) => void;
+}
 
-    const {
-        register,
-        handleSubmit,
-        formState: { isSubmitting },
-    } = useForm<SearchFormInputs>({
-        resolver: zodResolver(searchFormSchema),
-    });
+function SearchFormComponent({ onSearch, onApplyFilters }: SearchProductsProps) {
 
-    async function handleSearchTransactions(data: SearchFormInputs) {
-        await fetchTransactions(data.query)
+    const handleTransactionOrCategoryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value
+        onSearch(value)
     }
-
     return (
-        <SearchFormContainer onSubmit={handleSubmit(handleSearchTransactions)}>
-            <input type="text" placeholder="Busque por transações" {...register('query')} />
-
-            <button type="submit" disabled={isSubmitting}>
-                <MagnifyingGlass size={20} />
-                Buscar
-            </button>
-        </SearchFormContainer>
+        <>
+            <SearchFormContainer>
+                <input type="text" placeholder="Busque por transações ou categoria" onChange={handleTransactionOrCategoryChange} />
+                <Dialog.Root>
+                    <Dialog.Trigger asChild>
+                        <button>
+                            <MagnifyingGlass size={20} />
+                            Filtro avançado
+                        </button>
+                    </Dialog.Trigger>
+                    <SearchTransactionsModal onApplyFilters={onApplyFilters} />
+                </Dialog.Root>
+            </SearchFormContainer>
+        </>
     );
 }
 

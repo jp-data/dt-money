@@ -6,7 +6,7 @@ import { SignUp } from "./SignUp/sign-up";
 export function Auth() {
     return (
         <div>
-            <Header showButton={false} />
+            <Header showTransactionButton={false} showLogoutButton={false} />
             <FormContainer>
                 <SignIn />
                 <h2>Ou</h2>

@@ -18,9 +18,16 @@ interface CreateTransactionInput {
   category: string,
 }
 
+interface FilteredTransactionInput {
+  category: string
+  type: string
+  monthYear: string
+}
+
 interface TransactionContextType {
   transactions: Transaction[];
-  fetchTransactions: (query?: string) => Promise<void>;
+  fetchTransactions: () => Promise<void>;
+  fetchFilteredTransactions: (data: FilteredTransactionInput) => Promise<void>;
   createTransaction: (data: CreateTransactionInput) => Promise<void>;
 }
 
@@ -35,6 +42,7 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
 
   const fetchTransactions = useCallback(
     async () => {
+
       const token = localStorage.getItem('token')
       if (!token) {
         throw new Error('Usuário não autenticado.')
@@ -43,12 +51,29 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
       const response = await api.get('/transactions', {
         headers: {
           authorization: `Bearer ${token}`
-        }
+        },
       })
 
       setTransactions(response.data)
     },
     []
+  )
+
+  const fetchFilteredTransactions = useCallback(
+    async ({ category, type, monthYear }: { category: string, type: string, monthYear: string }) => {
+
+      const token = localStorage.getItem('token')
+      if (!token) {
+        throw new Error('Usuário não autenticado.')
+      }
+
+      const response = await api.get(`/transactions/filter?category=${category}&type=${type}&monthYear=${monthYear}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      setTransactions(response.data)
+    }, []
   )
 
   const createTransaction = useCallback(async (data: CreateTransactionInput) => {
@@ -89,6 +114,7 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
       transactions,
       fetchTransactions,
       createTransaction,
+      fetchFilteredTransactions
     }}>
       {children}
     </TransactionsContext.Provider>

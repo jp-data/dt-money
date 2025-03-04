@@ -5,17 +5,20 @@ import { NewTransactionModal } from "../NewTransactionModal";
 import { Logout } from "./Logout";
 
 interface HeaderProps {
-    showButton?: boolean
+    showTransactionButton?: boolean
+    showLogoutButton?: boolean
 }
 
-export function Header({ showButton = true }: HeaderProps) {
+export function Header({ showTransactionButton = true, showLogoutButton = true }: HeaderProps) {
     return (
         <HeaderContainer>
             <HeaderContent>
                 <img src={logoImg} />
                 <ButtonsContainer>
-                    <Logout />
-                    {showButton && (
+                    {showLogoutButton && (
+                        <Logout />
+                    )}
+                    {showTransactionButton && (
                         <Dialog.Root>
                             <Dialog.Trigger asChild>
                                 <NewTransactionButton>Nova transação</NewTransactionButton>
