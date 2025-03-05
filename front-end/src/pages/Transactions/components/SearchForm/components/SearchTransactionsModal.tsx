@@ -3,7 +3,6 @@ import { CloseButton, Content, Overlay, ReloadAndCloseButton, ReloadButton, Tran
 import { ArrowCircleDown, ArrowCircleUp, X, ClockClockwise } from 'phosphor-react';
 import { Controller, useForm } from 'react-hook-form';
 import InputMask from 'react-input-mask';
-import { useState } from 'react';
 
 interface SearchTransactionsModalProps {
     onApplyFilters: (filters: { monthYear: string; type: string; category: string }) => void

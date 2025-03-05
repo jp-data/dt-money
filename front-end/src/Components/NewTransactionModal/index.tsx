@@ -16,7 +16,7 @@ const newTransactionFormSchema = z.object({
 
 type NewTransactionFormInputs = z.infer<typeof newTransactionFormSchema>;
 
-export function NewTransactionModal() {
+export function NewTransactionModal({ onClose }) {
   const createTransaction = useContextSelector(TransactionsContext, (context) => {
     return context.createTransaction
   })
@@ -45,13 +45,14 @@ export function NewTransactionModal() {
     })
 
     reset()
+    onClose()
   }
   return (
     <Dialog.Portal>
       <Overlay />
       <Content>
         <Dialog.Title>Nova Transação</Dialog.Title>
-        <CloseButton>
+        <CloseButton onClick={onClose}>
           <X size={24} />
         </CloseButton>
         <form onSubmit={handleSubmit(handleCreateNewTransaction)}>
