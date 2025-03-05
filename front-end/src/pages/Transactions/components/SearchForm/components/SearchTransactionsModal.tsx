@@ -3,20 +3,47 @@ import { CloseButton, Content, Overlay, ReloadAndCloseButton, ReloadButton, Tran
 import { ArrowCircleDown, ArrowCircleUp, X, ClockClockwise } from 'phosphor-react';
 import { Controller, useForm } from 'react-hook-form';
 import InputMask from 'react-input-mask';
+import * as z from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+
 
 interface SearchTransactionsModalProps {
     onApplyFilters: (filters: { monthYear: string; type: string; category: string }) => void
+    onResetFilters: () => void;
+    onClose: () => void
 }
 
-export function SearchTransactionsModal({ onApplyFilters }: SearchTransactionsModalProps) {
-    const { control, handleSubmit, formState: { isSubmitting } } = useForm()
+interface SearchFiltersFormInput {
+    monthYear: string
+    type: string
+    category: string
+}
 
-    const handleSearchFilters = (data: any) => {
+const searchFiltersSchema = z.object({
+    monthYear: z.string().optional(),
+    type: z.string().optional(),
+    category: z.string().optional(),
+})
+
+type SearchFiltersFormInputs = z.infer<typeof searchFiltersSchema>;
+
+export function SearchTransactionsModal({ onApplyFilters, onClose, onResetFilters }: SearchTransactionsModalProps) {
+    const { control, handleSubmit, formState: { isSubmitting }, reset } = useForm<SearchFiltersFormInput>({
+        resolver: zodResolver(searchFiltersSchema),
+        defaultValues: {
+            monthYear: '',
+            type: '',
+            category: '',
+        }
+    })
+
+    const handleSearchFilters = (data: SearchFiltersFormInputs) => {
         onApplyFilters({
             monthYear: data.monthYear || '',
             type: data.type || '',
             category: data.category || '',
         })
+        onClose()
     }
     return (
         <>
@@ -25,10 +52,18 @@ export function SearchTransactionsModal({ onApplyFilters }: SearchTransactionsMo
                 <Content>
                     <Dialog.Title>Filtros</Dialog.Title>
                     <ReloadAndCloseButton>
-                        <ReloadButton type="button">
+                        <ReloadButton type="button" onClick={() => {
+                            reset({
+                                monthYear: '',
+                                type: '',
+                                category: ''
+                            });
+                            onResetFilters();
+                        }
+                        }>
                             <ClockClockwise size={24} />
                         </ReloadButton>
-                        <CloseButton>
+                        <CloseButton onClick={onClose}>
                             <X size={24} />
                         </CloseButton>
                     </ReloadAndCloseButton>

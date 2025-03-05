@@ -1,6 +1,6 @@
-import { MagnifyingGlass } from 'phosphor-react';
+import { Funnel } from 'phosphor-react';
 import { SearchFormContainer } from './styles';
-import { memo } from 'react';
+import { memo, useState } from 'react';
 import * as Dialog from '@radix-ui/react-dialog'
 import { SearchTransactionsModal } from './components/SearchTransactionsModal';
 
@@ -11,6 +11,7 @@ interface SearchProductsProps {
 }
 
 function SearchFormComponent({ onSearch, onApplyFilters }: SearchProductsProps) {
+    const [open, setOpen] = useState(false)
 
     const handleTransactionOrCategoryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value
@@ -20,14 +21,18 @@ function SearchFormComponent({ onSearch, onApplyFilters }: SearchProductsProps) 
         <>
             <SearchFormContainer>
                 <input type="text" placeholder="Busque por transações ou categoria" onChange={handleTransactionOrCategoryChange} />
-                <Dialog.Root>
-                    <Dialog.Trigger asChild>
+                <Dialog.Root open={open} onOpenChange={setOpen}>
+                    <Dialog.Trigger asChild onClick={() => setOpen(true)}>
                         <button>
-                            <MagnifyingGlass size={20} />
+                            <Funnel size={20} />
                             Filtro avançado
                         </button>
                     </Dialog.Trigger>
-                    <SearchTransactionsModal onApplyFilters={onApplyFilters} />
+                    <SearchTransactionsModal
+                        onApplyFilters={onApplyFilters}
+                        onClose={() => setOpen(false)}
+                        onResetFilters={() => onApplyFilters({ monthYear: '', type: '', category: '' })}
+                    />
                 </Dialog.Root>
             </SearchFormContainer>
         </>
