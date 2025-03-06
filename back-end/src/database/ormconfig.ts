@@ -6,6 +6,8 @@ const environment = process.env.NODE_ENV || 'development';
 const envFile = path.resolve(__dirname, `../../${environment}.env`);
 dotenv.config({ path: envFile });
 
+const isProduction = environment === 'production';
+
 const config: DataSourceOptions = {
   type: 'postgres',
   host: process.env.DB_HOST,
@@ -17,6 +19,7 @@ const config: DataSourceOptions = {
   entities: [path.join(__dirname, '../**/*.entity.{ts,js}')],
   logging: environment === 'development',
   migrations: [path.join(__dirname, '../../dist/database/migrations/*.js')],
+  migrationsRun: isProduction,
   ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false,
 };
 
