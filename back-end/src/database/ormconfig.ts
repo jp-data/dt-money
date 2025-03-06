@@ -13,10 +13,11 @@ const config: DataSourceOptions = {
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  synchronize: true,
+  synchronize: false,
   entities: [path.join(__dirname, '../**/*.entity.{ts,js}')],
   logging: environment === 'development',
   migrations: [path.join(__dirname, '../../dist/database/migrations/*.js')],
+  ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false,
 };
 
 export const AppDataSource = new DataSource(config);
