@@ -4,26 +4,29 @@ export const FormContainer = styled.div`
     width: 25%;
     margin: 2rem auto 0;
     padding: 0 1.5rem;
-    height: 70vh;
+    min-height: 100vh;
+    min-height: 70vh;
+    overflow-y: auto;
     background: ${props => props.theme["gray-900"]};
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     box-sizing: border-box;
-    overflow: hidden;
+    overflow: auto;
     border-radius: 12px;
 
     form {
         display: flex;
         flex-direction: column;
         align-items: center;
-        width: 80%;
-        gap: 1 rem
+        width: 100%;
+        gap: 1rem;
+        padding-bottom: 3rem;
     }
 
     input {
-        border-bottom: 6px;
+        border-bottom: 6px solid ${props => props.theme["gray-300"]};
         border: 0;
         border-radius: 8px;
         width: 100%;
@@ -78,11 +81,13 @@ export const FormContainer = styled.div`
 
     @media (max-width: 768px){
         width: 80%;
-        padding: 0 1rem;
-        height: auto;
+        padding: 2rem 1rem;
+        min-height: 90vh;
+        justify-content: flex-start;
 
         form {
             width: 90%;
+            padding-bottom: 5rem;
         }
 
         button {
