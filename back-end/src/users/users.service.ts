@@ -47,10 +47,19 @@ export class UserService {
     return this.usersRepository.save(user);
   }
 
+  async findUser(email: string) {
+    const userExists = await this.usersRepository.findOneBy({ email });
+    if (!userExists) {
+      throw new HttpException(
+        { message: 'Invalid credentials', error: 'InvalidCredentials' },
+        HttpStatus.CONFLICT,
+      );
+    }
+    return userExists;
+  }
+
   async createLogin(email: string, password: string) {
-    const user = await this.usersRepository.findOne({
-      where: { email },
-    });
+    const user = await this.findUser(email);
     const isAuthenticatedUser = await bcrypt.compare(password, user.password);
 
     if (!isAuthenticatedUser || !user) {
