@@ -39,7 +39,7 @@ export function Transactions() {
     const transactionsToRender = searchValue || filters.category || filters.type || filters.monthYear ? transactionsFiltered : transactions
 
     return (
-        <div>
+        <>
             <Header />
             <Summary />
             <TransactionsContainer>
@@ -64,6 +64,6 @@ export function Transactions() {
                     </tbody>
                 </TransactionsTable>
             </TransactionsContainer>
-        </div >
+            </>
     )
 }

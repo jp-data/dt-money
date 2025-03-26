@@ -5,8 +5,6 @@ export const GlobalStyle= createGlobalStyle`
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-
-       
     }
 
     :focus { 
@@ -18,12 +16,13 @@ export const GlobalStyle= createGlobalStyle`
         background-color: ${props => props.theme['gray-800']};
         color: ${props => props.theme['gray-100']};
         -webkit-font-smoothing: antiaLiased;
+        
+        @media(max-width: 768px) {
+            display: flex;
+        }
     }
 
     body, input, textarea, button {
         font: 400 1rem Moderustic, sans-serif;
     }
-
-
-
 `
